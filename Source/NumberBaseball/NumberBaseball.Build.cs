@@ -8,7 +8,14 @@ public class NumberBaseball : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] { 
+			// Initial dependencies
+			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG",
+		});
+
+		PublicIncludePaths.AddRange(new string[] {
+			"NumberBaseball",
+		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
