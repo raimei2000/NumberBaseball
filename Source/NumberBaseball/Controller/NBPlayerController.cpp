@@ -3,17 +3,20 @@
 
 #include "Controller/NBPlayerController.h"
 
-#include "UI/UW_NumberPad.h"
+#include "UI/UW_MainHUD.h"
 
 void ANBPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    UUW_NumberPad* NumberPad = CreateWidget<UUW_NumberPad>(this, NumberPadClass);
-    if (IsValid(NumberPad))
+    if (MainHUDWidgetClass)
     {
-        NumberPadInstance = NumberPad;
-        NumberPadInstance->AddToViewport();
+        MainHUDWidgetInstance = CreateWidget<UUW_MainHUD>(this, MainHUDWidgetClass);
+
+        if (IsValid(MainHUDWidgetInstance))
+        {
+            MainHUDWidgetInstance->AddToViewport();
+        }
     }
 
 }

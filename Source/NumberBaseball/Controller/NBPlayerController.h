@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "NBPlayerController.generated.h"
 
-class UUW_NumberPad;
+class UUW_MainHUD;
 
 /**
  * 
@@ -20,7 +20,7 @@ public:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUW_NumberPad> NumberPadClass;
+	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
 
-	TObjectPtr<UUW_NumberPad> NumberPadInstance;
+	TObjectPtr<UUW_MainHUD> MainHUDWidgetInstance;
 };
