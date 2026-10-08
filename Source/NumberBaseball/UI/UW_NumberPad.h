@@ -22,10 +22,17 @@ public:
 
 	virtual void NativeDestruct() override;
 
+private:
+	UFUNCTION()
+	void HandleNumberButtonClicked(int32 Digit);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget))
 	TObjectPtr<UHorizontalBox> ButtonContainer;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_NumberButton> ButtonClass;
+
+	UPROPERTY()
+	TArray<TObjectPtr<UUW_NumberButton>> NumberButtons;
 };
