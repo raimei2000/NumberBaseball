@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "UW_NumberPad.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChosenNumberChangedDelegate);
+
 class UHorizontalBox;
 class UUW_NumberButton;
 class UButton;
@@ -18,10 +20,16 @@ class NUMBERBASEBALL_API UUW_NumberPad : public UUserWidget
 {
 	GENERATED_BODY()
 
+#pragma region Lifecycle Override
+
 public:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeDestruct() override;
+
+#pragma endregion
+
+#pragma region EventHandler
 
 private:
 	UFUNCTION()
@@ -29,6 +37,17 @@ private:
 
 	UFUNCTION()
 	void DeleteLastDigit();
+
+#pragma endregion
+
+#pragma region Delegate
+
+public:
+	FOnChosenNumberChangedDelegate OnChosenNumberChanged;
+
+#pragma endregion
+
+#pragma region Widget
 
 protected:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget))
@@ -43,10 +62,16 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> BackSpaceButton;
 
+#pragma endregion
+
+#pragma region Fields
+
 public:
 	UPROPERTY()
 	TArray<int32> Digits;
 
 private:
 	int32 MaxNumberOfDigits = 3;
+
+#pragma endregion
 };
