@@ -23,6 +23,8 @@ void UUW_NumberPad::NativeConstruct()
         ButtonContainer->AddChildToHorizontalBox(Button);
         NumberButtons.Add(Button);
     }
+
+    BackSpaceButton->OnClicked.AddDynamic(this, &UUW_NumberPad::DeleteLastDigit);
 }
 
 void UUW_NumberPad::NativeDestruct()
@@ -32,6 +34,8 @@ void UUW_NumberPad::NativeDestruct()
 
 void UUW_NumberPad::HandleNumberButtonClicked(int32 Digit)
 {
+    if (Digits.Num() >= MaxNumberOfDigits) { return; }
+
     // 숫자 1 ~ 9, NumberButtons에는 0 ~ 8
     int32 ArrayIndex = Digit - 1;
 
@@ -40,18 +44,13 @@ void UUW_NumberPad::HandleNumberButtonClicked(int32 Digit)
         NumberButtons[ArrayIndex]->SetIsEnabled(false);
     }
 
-    if (Digits.Num() < 3)
+    if (Digits.Num() < MaxNumberOfDigits)
     {
         Digits.Add(Digit);
     }
 
-    if (Digits.Num() == 3)
+    if (Digits.Num() == MaxNumberOfDigits)
     {
-        for (auto& Button : NumberButtons)
-        {
-            Button->SetIsEnabled(false);
-        }
-
         FString DebugString;
         for (int32 Digit : Digits)
         {
@@ -59,5 +58,13 @@ void UUW_NumberPad::HandleNumberButtonClicked(int32 Digit)
         }
         UE_LOG(LogTemp, Warning, TEXT("%s"), *DebugString);
     }
-    
+}
+
+void UUW_NumberPad::DeleteLastDigit()
+{
+    if (Digits.Num() <= 0) { return; }
+
+    int32 LastDigit = Digits.Last();
+    Digits.RemoveAt(Digits.Num() - 1);
+    NumberButtons[LastDigit - 1]->SetIsEnabled(true);
 }

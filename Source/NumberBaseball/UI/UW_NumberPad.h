@@ -27,6 +27,9 @@ private:
 	UFUNCTION()
 	void HandleNumberButtonClicked(int32 Digit);
 
+	UFUNCTION()
+	void DeleteLastDigit();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget))
 	TObjectPtr<UHorizontalBox> ButtonContainer;
@@ -38,9 +41,12 @@ protected:
 	TArray<TObjectPtr<UUW_NumberButton>> NumberButtons;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> BackSpace;
+	TObjectPtr<UButton> BackSpaceButton;
 
 public:
 	UPROPERTY()
 	TArray<int32> Digits;
+
+private:
+	int32 MaxNumberOfDigits = 3;
 };
