@@ -40,4 +40,24 @@ void UUW_NumberPad::HandleNumberButtonClicked(int32 Digit)
         NumberButtons[ArrayIndex]->SetIsEnabled(false);
     }
 
+    if (Digits.Num() < 3)
+    {
+        Digits.Add(Digit);
+    }
+
+    if (Digits.Num() == 3)
+    {
+        for (auto& Button : NumberButtons)
+        {
+            Button->SetIsEnabled(false);
+        }
+
+        FString DebugString;
+        for (int32 Digit : Digits)
+        {
+            DebugString += FString::Printf(TEXT("%d"), Digit);
+        }
+        UE_LOG(LogTemp, Warning, TEXT("%s"), *DebugString);
+    }
+    
 }

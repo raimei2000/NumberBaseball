@@ -8,6 +8,7 @@
 
 class UHorizontalBox;
 class UUW_NumberButton;
+class UButton;
 
 /**
  * 
@@ -35,4 +36,11 @@ protected:
 
 	UPROPERTY()
 	TArray<TObjectPtr<UUW_NumberButton>> NumberButtons;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> BackSpace;
+
+public:
+	UPROPERTY()
+	TArray<int32> Digits;
 };
