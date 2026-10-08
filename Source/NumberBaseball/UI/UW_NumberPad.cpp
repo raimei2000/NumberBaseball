@@ -59,4 +59,6 @@ void UUW_NumberPad::DeleteLastDigit()
     int32 LastDigit = Digits.Last();
     Digits.RemoveAt(Digits.Num() - 1);
     NumberButtons[LastDigit - 1]->SetIsEnabled(true);
+
+    OnChosenNumberChanged.Broadcast();
 }

@@ -15,6 +15,8 @@ void UUW_MainHUD::NativeConstruct()
     {
         NumberPad->OnChosenNumberChanged.AddDynamic(this, &UUW_MainHUD::HandleChosenNumberChanged);
     }
+
+    ChosenNumberText->SetText(FText::AsNumber(0));
 }
 
 void UUW_MainHUD::NativeDestruct()
