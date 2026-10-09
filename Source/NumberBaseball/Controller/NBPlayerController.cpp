@@ -6,8 +6,10 @@
 #include "NumberBaseball.h"
 #include "UI/UW_MainHUD.h"
 #include "UI/UW_NumberPad.h"
+#include "GameMode/NBGameModeBase.h"
 
 #include "EngineUtils.h"
+#include "Kismet/GameplayStatics.h"
 
 ANBPlayerController::ANBPlayerController()
 {
@@ -55,6 +57,16 @@ void ANBPlayerController::ServerRPCLogChosenNumber_Implementation(const TArray<i
         if (IsValid(NBPC))
         {
             NBPC->ClientRPCLogChosenNumber(FString::FromInt(Number));
+        }
+    }
+
+    AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
+    if (IsValid(GM))
+    {
+        ANBGameModeBase* NBGM = Cast<ANBGameModeBase>(GM);
+        if (IsValid(NBGM))
+        {
+            NBGM->JudgeResult(InDigits);
         }
     }
 }

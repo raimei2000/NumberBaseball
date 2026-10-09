@@ -3,3 +3,50 @@
 
 #include "GameMode/NBGameModeBase.h"
 
+void ANBGameModeBase::BeginPlay()
+{
+    Super::BeginPlay();
+
+    InitSecretNumber();
+}
+
+void ANBGameModeBase::InitSecretNumber()
+{
+    TArray<int32> Digits;
+    for (int32 i = 1; i <= 9; ++i)
+    {
+        Digits.Add(i);
+    }
+
+    SecretNumber.Reset(NumberOfDigit);
+    for (int32 i = 0; i < NumberOfDigit; ++i)
+    {
+        int32 Index = FMath::RandRange(0, Digits.Num() - 1);
+        SecretNumber.Add(Digits[Index]);
+        Digits.RemoveAt(Index);
+    }
+}
+
+TArray<int32> ANBGameModeBase::JudgeResult(const TArray<int32>& InGuessNumber)
+{
+    TArray<int32> Result = { 0, 0, 0 };
+
+    for (int32 i = 0; i < InGuessNumber.Num(); ++i)
+    {
+        if (SecretNumber[i] == InGuessNumber[i])
+        {
+            Result[1]++; // StrikeCount
+        }
+        else if (SecretNumber.Contains(InGuessNumber[i]))
+        {
+            Result[0]++; // BallCount
+        }
+    }
+
+    if (Result[0] == 0 && Result[1] == 0)
+    {
+        Result[2]++;
+    }
+
+    return Result;
+}
