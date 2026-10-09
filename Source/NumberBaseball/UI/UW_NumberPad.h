@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChosenNumberChangedDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNumberCommittedDelegate, const TArray<int32>&, Digits);
 
-class UHorizontalBox;
+class UWrapBox;
 class UUW_NumberButton;
 class UButton;
 
@@ -56,8 +56,8 @@ public:
 #pragma region Widget
 
 protected:
-	UPROPERTY(EditDefaultsOnly, meta = (BindWidget))
-	TObjectPtr<UHorizontalBox> ButtonContainer;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UWrapBox> ButtonContainer;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_NumberButton> ButtonClass;

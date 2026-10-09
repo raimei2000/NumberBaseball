@@ -5,7 +5,7 @@
 
 #include "UI/UW_NumberButton.h"
 
-#include "Components/HorizontalBox.h"
+#include "Components/WrapBox.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 
@@ -20,7 +20,7 @@ void UUW_NumberPad::NativeConstruct()
         Button->NumberText->SetText(FText::FromString(FString::Printf(TEXT("%d"), i)));
         Button->OnNumButtonClicked.AddDynamic(this, &UUW_NumberPad::HandleNumberButtonClicked);
 
-        ButtonContainer->AddChildToHorizontalBox(Button);
+        ButtonContainer->AddChildToWrapBox(Button);
         NumberButtons.Add(Button);
     }
 
