@@ -40,38 +40,32 @@ void ANBPlayerController::BeginPlay()
 
 void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
 {
-    ServerRPCLogChosenNumber(InDigits);
+    ServerRPCHandleCommit(InDigits);
 }
 
-void ANBPlayerController::ServerRPCLogChosenNumber_Implementation(const TArray<int32>& InDigits)
+void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int32>& InDigits)
 {
-    int32 Number = 0;
-    for (int32 Digit : InDigits)
-    {
-        Number = Number * 10 + Digit;
-    }
-
-    for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
-    {
-        ANBPlayerController* NBPC = *It;
-        if (IsValid(NBPC))
-        {
-            NBPC->ClientRPCLogChosenNumber(FString::FromInt(Number));
-        }
-    }
-
     AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
     if (IsValid(GM))
     {
         ANBGameModeBase* NBGM = Cast<ANBGameModeBase>(GM);
         if (IsValid(NBGM))
         {
-            NBGM->JudgeResult(InDigits);
+            TArray<int32> ResultArray = NBGM->JudgeResult(InDigits);
+
+            for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
+            {
+                ANBPlayerController* NBPC = *It;
+                if (IsValid(NBPC))
+                {
+                    NBPC->ClientRPCUpdateResultText(InDigits, ResultArray);
+                }
+            }
         }
     }
 }
 
-void ANBPlayerController::ClientRPCLogChosenNumber_Implementation(const FString& InNumberString)
+void ANBPlayerController::ClientRPCUpdateResultText_Implementation(const TArray<int32>& GuessArray, const TArray<int32>& ResultArray)
 {
-    NB_LOG_NET(LogNBNet, Log, TEXT("%s"), *InNumberString);
+    MainHUDWidgetInstance->UpdateResultText(GuessArray, ResultArray);
 }

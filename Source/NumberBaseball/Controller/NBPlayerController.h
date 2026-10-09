@@ -25,10 +25,10 @@ public:
 	void HandleNumberCommit(const TArray<int32>& InDigits);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRPCLogChosenNumber(const TArray<int32>& InDigits);
+	void ServerRPCHandleCommit(const TArray<int32>& InDigits);
 
 	UFUNCTION(Client, Reliable)
-	void ClientRPCLogChosenNumber(const FString& InNumberString);
+	void ClientRPCUpdateResultText(const TArray<int32>& GuessArray, const TArray<int32>& ResultArray);
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
