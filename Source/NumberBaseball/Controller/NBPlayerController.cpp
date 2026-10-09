@@ -68,4 +68,5 @@ void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int3
 void ANBPlayerController::ClientRPCUpdateResultText_Implementation(const TArray<int32>& GuessArray, const TArray<int32>& ResultArray)
 {
     MainHUDWidgetInstance->UpdateResultText(GuessArray, ResultArray);
+    MainHUDWidgetInstance->UpdateGuessCountText();
 }

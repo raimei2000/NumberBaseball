@@ -20,6 +20,9 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
+	void IncreaseGuessCount();
+
+public:
 	UPROPERTY(Replicated)
 	FString PlayerNameString;
 

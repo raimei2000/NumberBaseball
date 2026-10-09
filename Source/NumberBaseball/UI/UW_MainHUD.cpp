@@ -4,6 +4,8 @@
 #include "UI/UW_MainHUD.h"
 
 #include "UI/UW_NumberPad.h"
+#include "Controller/NBPlayerController.h"
+#include "Player/NBPlayerState.h"
 
 #include "Components/TextBlock.h"
 
@@ -52,6 +54,23 @@ void UUW_MainHUD::UpdateResultText(const TArray<int32>& GuessArray, const TArray
     }
 
     ResultText->SetText(Result);
+}
+
+void UUW_MainHUD::UpdateGuessCountText()
+{
+    int32 CurrentCount = 0, MaxCount = 0;
+
+    if (ANBPlayerController* NBPC = Cast<ANBPlayerController>(GetOwningPlayer()))
+    {
+        if (IsValid(NBPC))
+        {
+            ANBPlayerState* NBPS = NBPC->GetPlayerState<ANBPlayerState>();
+            CurrentCount = NBPS->CurrentGuessCount;
+            MaxCount = NBPS->MaxGuessCount;
+        }
+    }
+
+    GuessCountText->SetText(FText::FromString(FString::Printf(TEXT("Try: %d / %d"), CurrentCount, MaxCount)));
 }
 
 void UUW_MainHUD::HandleChosenNumberChanged()

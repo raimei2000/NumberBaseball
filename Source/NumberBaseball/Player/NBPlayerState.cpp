@@ -21,3 +21,8 @@ void ANBPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
     DOREPLIFETIME(ThisClass, CurrentGuessCount);
     DOREPLIFETIME(ThisClass, MaxGuessCount);
 }
+
+void ANBPlayerState::IncreaseGuessCount()
+{
+    CurrentGuessCount++;
+}

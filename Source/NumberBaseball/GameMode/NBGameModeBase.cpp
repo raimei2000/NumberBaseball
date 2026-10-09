@@ -52,7 +52,7 @@ void ANBGameModeBase::IncreaseGuessCount(ANBPlayerController* InPC)
     ANBPlayerState* NBPS = InPC->GetPlayerState<ANBPlayerState>();
     if (IsValid(NBPS))
     {
-        NBPS->CurrentGuessCount++;
+        NBPS->IncreaseGuessCount();
     }
 }
 
