@@ -7,6 +7,7 @@
 #include "UI/UW_MainHUD.h"
 #include "UI/UW_NumberPad.h"
 #include "GameMode/NBGameModeBase.h"
+#include "Player/NBPlayerState.h"
 
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
@@ -41,6 +42,12 @@ void ANBPlayerController::BeginPlay()
 void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
 {
     ServerRPCHandleCommit(InDigits);
+
+    ANBPlayerState* NBPS = GetPlayerState<ANBPlayerState>();
+    if (NBPS->CurrentGuessCount >= NBPS->MaxGuessCount)
+    {
+        MainHUDWidgetInstance->NumberPad->SetIsEnabled(false);
+    }
 }
 
 void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int32>& InDigits)
