@@ -51,7 +51,7 @@ void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int3
         ANBGameModeBase* NBGM = Cast<ANBGameModeBase>(GM);
         if (IsValid(NBGM))
         {
-            TArray<int32> ResultArray = NBGM->JudgeResult(InDigits);
+            TArray<int32> ResultArray = NBGM->JudgeResult(this, InDigits);
 
             for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
             {

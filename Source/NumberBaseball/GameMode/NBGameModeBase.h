@@ -24,8 +24,10 @@ public:
 public:
 	void InitSecretNumber();
 
+	void IncreaseGuessCount(ANBPlayerController* InPC);
+
 	// Return Array: [Ball, Strike, Out]
-	TArray<int32> JudgeResult(const TArray<int32>& InGuessNumber);
+	TArray<int32> JudgeResult(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber);
 
 private:
 	int32 NumberOfDigit = 3;

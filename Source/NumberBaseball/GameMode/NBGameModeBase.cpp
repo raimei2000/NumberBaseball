@@ -47,7 +47,16 @@ void ANBGameModeBase::InitSecretNumber()
     }
 }
 
-TArray<int32> ANBGameModeBase::JudgeResult(const TArray<int32>& InGuessNumber)
+void ANBGameModeBase::IncreaseGuessCount(ANBPlayerController* InPC)
+{
+    ANBPlayerState* NBPS = InPC->GetPlayerState<ANBPlayerState>();
+    if (IsValid(NBPS))
+    {
+        NBPS->CurrentGuessCount++;
+    }
+}
+
+TArray<int32> ANBGameModeBase::JudgeResult(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber)
 {
     TArray<int32> Result = { 0, 0, 0 };
 
@@ -67,6 +76,8 @@ TArray<int32> ANBGameModeBase::JudgeResult(const TArray<int32>& InGuessNumber)
     {
         Result[2]++;
     }
+
+    IncreaseGuessCount(CommitPlayerController);
 
     return Result;
 }
