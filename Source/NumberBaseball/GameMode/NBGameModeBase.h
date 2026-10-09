@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "NBGameModeBase.generated.h"
 
+class ANBPlayerController;
+
 /**
  * 
  */
@@ -17,6 +19,8 @@ class NUMBERBASEBALL_API ANBGameModeBase : public AGameModeBase
 public:
 	virtual void BeginPlay()override;
 
+	virtual void OnPostLogin(AController* NewPlayer) override;
+
 public:
 	void InitSecretNumber();
 
@@ -27,4 +31,7 @@ private:
 	int32 NumberOfDigit = 3;
 
 	TArray<int32> SecretNumber;
+
+	UPROPERTY()
+	TArray<TObjectPtr<ANBPlayerController>> AllPlayerControllers;
 };

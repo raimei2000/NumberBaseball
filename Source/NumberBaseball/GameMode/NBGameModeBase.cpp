@@ -3,11 +3,31 @@
 
 #include "GameMode/NBGameModeBase.h"
 
+#include "Controller/NBPlayerController.h"
+#include "Player/NBPlayerState.h"
+
 void ANBGameModeBase::BeginPlay()
 {
     Super::BeginPlay();
 
     InitSecretNumber();
+}
+
+void ANBGameModeBase::OnPostLogin(AController* NewPlayer)
+{
+    Super::OnPostLogin(NewPlayer);
+
+    ANBPlayerController* NBPC = Cast<ANBPlayerController>(NewPlayer);
+    if (IsValid(NBPC))
+    {
+        AllPlayerControllers.Add(NBPC);
+
+        ANBPlayerState* NBPS = NBPC->GetPlayerState<ANBPlayerState>();
+        if (IsValid(NBPS))
+        {
+            NBPS->PlayerNameString = TEXT("Player") + FString::FromInt(AllPlayerControllers.Num());
+        }
+    }
 }
 
 void ANBGameModeBase::InitSecretNumber()
