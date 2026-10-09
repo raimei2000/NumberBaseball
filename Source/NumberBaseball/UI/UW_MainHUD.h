@@ -23,6 +23,9 @@ public:
 	virtual void NativeDestruct() override;
 
 public:
+	void UpdateResultText(const TArray<int32>& GuessArray, const TArray<int32>& ResultArray);
+
+public:
 	UFUNCTION()
 	void HandleChosenNumberChanged();
 
@@ -32,5 +35,8 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> ChosenNumberText;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> ResultText;
 
 };
