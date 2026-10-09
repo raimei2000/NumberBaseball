@@ -7,6 +7,7 @@
 #include "UW_NumberPad.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnChosenNumberChangedDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnNumberCommittedDelegate, const TArray<int32>&, Digits);
 
 class UHorizontalBox;
 class UUW_NumberButton;
@@ -38,12 +39,17 @@ private:
 	UFUNCTION()
 	void DeleteLastDigit();
 
+	UFUNCTION()
+	void HandleEnterButtonClicked();
+
 #pragma endregion
 
 #pragma region Delegate
 
 public:
 	FOnChosenNumberChangedDelegate OnChosenNumberChanged;
+
+	FOnNumberCommittedDelegate OnNumberCommitted;
 
 #pragma endregion
 
@@ -61,6 +67,9 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> BackSpaceButton;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> EnterButton;
 
 #pragma endregion
 

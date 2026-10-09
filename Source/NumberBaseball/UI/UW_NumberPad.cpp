@@ -25,6 +25,7 @@ void UUW_NumberPad::NativeConstruct()
     }
 
     BackSpaceButton->OnClicked.AddDynamic(this, &UUW_NumberPad::DeleteLastDigit);
+    EnterButton->OnClicked.AddDynamic(this, &UUW_NumberPad::HandleEnterButtonClicked);
 }
 
 void UUW_NumberPad::NativeDestruct()
@@ -61,4 +62,9 @@ void UUW_NumberPad::DeleteLastDigit()
     NumberButtons[LastDigit - 1]->SetIsEnabled(true);
 
     OnChosenNumberChanged.Broadcast();
+}
+
+void UUW_NumberPad::HandleEnterButtonClicked()
+{
+    OnNumberCommitted.Broadcast(Digits);
 }
