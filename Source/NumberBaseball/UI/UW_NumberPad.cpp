@@ -66,5 +66,17 @@ void UUW_NumberPad::DeleteLastDigit()
 
 void UUW_NumberPad::HandleEnterButtonClicked()
 {
+    // 자리수를 다 안채우면 return
+    if (Digits.Num() < MaxNumberOfDigits) { return; }
+
     OnNumberCommitted.Broadcast(Digits);
+
+    // 버튼들 초기화
+    for (int32 i : Digits)
+    {
+        NumberButtons[i - 1]->SetIsEnabled(true);
+    }
+    Digits.Reset();
+
+    OnChosenNumberChanged.Broadcast();
 }

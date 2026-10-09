@@ -62,9 +62,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_NumberButton> ButtonClass;
 
-	UPROPERTY()
-	TArray<TObjectPtr<UUW_NumberButton>> NumberButtons;
-
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> BackSpaceButton;
 
@@ -76,6 +73,9 @@ protected:
 #pragma region Fields
 
 public:
+	UPROPERTY()
+	TArray<TObjectPtr<UUW_NumberButton>> NumberButtons;
+
 	UPROPERTY()
 	TArray<int32> Digits;
 
