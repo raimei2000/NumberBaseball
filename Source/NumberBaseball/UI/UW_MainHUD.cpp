@@ -44,7 +44,7 @@ void UUW_MainHUD::UpdateResultText(const TArray<int32>& GuessArray, const TArray
     FText Result;
     if (ResultArray[2] > 0) // Out
     {
-        Result = FText::FromString(TEXT("Out"));
+        Result = FText::FromString(FString::Printf(TEXT("%d => Out"), GuessNumber));
     }
     else // N Ball M Strike
     {
