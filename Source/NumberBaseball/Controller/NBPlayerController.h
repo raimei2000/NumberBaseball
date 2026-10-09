@@ -17,7 +17,18 @@ class NUMBERBASEBALL_API ANBPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	ANBPlayerController();
+
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void HandleNumberCommit(const TArray<int32>& InDigits);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRPCLogChosenNumber(const TArray<int32>& InDigits);
+
+	UFUNCTION(Client, Reliable)
+	void ClientRPCLogChosenNumber(const FString& InNumberString);
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
