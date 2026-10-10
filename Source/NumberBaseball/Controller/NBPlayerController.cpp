@@ -41,13 +41,13 @@ void ANBPlayerController::BeginPlay()
 
 void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
 {
-    ServerRPCHandleCommit(InDigits);
-
     ANBPlayerState* NBPS = GetPlayerState<ANBPlayerState>();
-    if (NBPS->CurrentGuessCount >= NBPS->MaxGuessCount)
+    if (NBPS->CurrentGuessCount + 1 == NBPS->MaxGuessCount)
     {
         MainHUDWidgetInstance->NumberPad->SetIsEnabled(false);
     }
+
+    ServerRPCHandleCommit(InDigits);
 }
 
 void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int32>& InDigits)
