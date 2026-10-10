@@ -22,11 +22,14 @@ public:
 public:
 	void IncreaseGuessCount();
 
+	UFUNCTION()
+	void OnRep_UpdateCurrentGuessCountText();
+
 public:
 	UPROPERTY(Replicated)
 	FString PlayerNameString;
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_UpdateCurrentGuessCountText)
 	int32 CurrentGuessCount;
 
 	UPROPERTY(Replicated)

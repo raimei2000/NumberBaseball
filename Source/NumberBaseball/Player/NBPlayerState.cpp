@@ -3,6 +3,9 @@
 
 #include "NBPlayerState.h"
 
+#include "Controller/NBPlayerController.h"
+#include "UI/UW_MainHUD.h"
+
 #include "Net/UnrealNetwork.h"
 
 ANBPlayerState::ANBPlayerState()
@@ -25,4 +28,15 @@ void ANBPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 void ANBPlayerState::IncreaseGuessCount()
 {
     CurrentGuessCount++;
+}
+
+void ANBPlayerState::OnRep_UpdateCurrentGuessCountText()
+{
+    if (HasAuthority()) { return; }
+
+    ANBPlayerController* NBPC = Cast<ANBPlayerController>(GetOwningController());
+    if (IsValid(NBPC))
+    {
+        NBPC->MainHUDWidgetInstance->UpdateGuessCountText();
+    }
 }
