@@ -117,7 +117,7 @@ void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int
 
         if (bIsDraw) // Draw
         {
-            FString ResultString = FString(TEXT("Draw.."));
+            FString ResultString = FString::Printf(TEXT("Draw.. Answer: %d%d%d"), SecretNumber[0], SecretNumber[1], SecretNumber[2]);
 
             for (const auto& NBPC : AllPlayerControllers)
             {
