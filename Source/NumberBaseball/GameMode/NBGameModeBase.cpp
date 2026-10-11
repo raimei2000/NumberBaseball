@@ -14,7 +14,7 @@ void ANBGameModeBase::BeginPlay()
 {
     Super::BeginPlay();
 
-    InitSecretNumber();
+    ResetGame();
 }
 
 void ANBGameModeBase::OnPostLogin(AController* NewPlayer)
@@ -85,6 +85,8 @@ TArray<int32> ANBGameModeBase::JudgeCommit(ANBPlayerController* CommitPlayerCont
 
     IncreaseGuessCount(CommitPlayerController);
 
+    MoveOnToNextTurn();
+
     return Result;
 }
 
@@ -144,4 +146,29 @@ void ANBGameModeBase::ResetGame()
             
         }
     }
+
+    ControlTurn();
+}
+
+void ANBGameModeBase::ControlTurn()
+{
+    for (int32 i = 0; i < AllPlayerControllers.Num(); i++)
+    {
+        if (i == IndexOfPlayer)
+        {
+            AllPlayerControllers[i]->ClientRPCEnableNumberPad();
+        }
+        else
+        {
+            AllPlayerControllers[i]->ClientRPCDisableNumberPad();
+        }
+    }
+}
+
+void ANBGameModeBase::MoveOnToNextTurn()
+{
+    IndexOfPlayer++;
+    IndexOfPlayer %= AllPlayerControllers.Num();
+
+    ControlTurn();
 }

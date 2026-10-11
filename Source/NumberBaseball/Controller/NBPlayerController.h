@@ -36,6 +36,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRPCEnableNumberPad();
 
+	UFUNCTION(Client, Reliable)
+	void ClientRPCDisableNumberPad();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
 

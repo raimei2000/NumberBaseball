@@ -51,6 +51,11 @@ void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
     ServerRPCHandleCommit(InDigits);
 }
 
+void ANBPlayerController::ClientRPCDisableNumberPad_Implementation()
+{
+    MainHUDWidgetInstance->NumberPad->SetIsEnabled(false);
+}
+
 void ANBPlayerController::ClientRPCEnableNumberPad_Implementation()
 {
     MainHUDWidgetInstance->NumberPad->SetIsEnabled(true);

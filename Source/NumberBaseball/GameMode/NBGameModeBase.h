@@ -33,10 +33,16 @@ public:
 
 	void ResetGame();
 
+	void ControlTurn();
+
+	void MoveOnToNextTurn();
+
 private:
 	int32 NumberOfDigit = 3;
 
 	TArray<int32> SecretNumber;
+
+	int32 IndexOfPlayer = 0;
 
 	UPROPERTY()
 	TArray<TObjectPtr<ANBPlayerController>> AllPlayerControllers;
