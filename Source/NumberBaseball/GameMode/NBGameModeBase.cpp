@@ -8,6 +8,8 @@
 #include "UI/UW_MainHUD.h"
 #include "NumberBaseball.h"
 
+#include "EngineUtils.h"
+
 void ANBGameModeBase::BeginPlay()
 {
     Super::BeginPlay();
@@ -88,7 +90,7 @@ TArray<int32> ANBGameModeBase::JudgeCommit(ANBPlayerController* CommitPlayerCont
 
 void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int32 InStrikeCount)
 {
-    if (InStrikeCount == 3)
+    if (InStrikeCount == 3) // CommitPlayerController Win
     {
         ANBPlayerState* NBPS = CommitPlayerController->GetPlayerState<ANBPlayerState>();
         FString ResultString = NBPS->PlayerNameString + FString(TEXT(" Win!!"));
@@ -97,6 +99,8 @@ void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int
         {
             NBPC->ClientRPCShowGameResult(ResultString);
         }
+
+        ResetGame();
     }
     else
     {
@@ -111,7 +115,7 @@ void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int
             }
         }
 
-        if (bIsDraw)
+        if (bIsDraw) // Draw
         {
             FString ResultString = FString(TEXT("Draw.."));
 
@@ -119,6 +123,25 @@ void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int
             {
                 NBPC->ClientRPCShowGameResult(ResultString);
             }
+
+            ResetGame();
+        }
+    }
+}
+
+void ANBGameModeBase::ResetGame()
+{
+    InitSecretNumber();
+
+    for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
+    {
+        (*It)->ClientRPCEnableNumberPad();
+
+        ANBPlayerState* NBPS = (*It)->GetPlayerState<ANBPlayerState>();
+        if (IsValid(NBPS))
+        {
+            NBPS->CurrentGuessCount = 0;
+            
         }
     }
 }

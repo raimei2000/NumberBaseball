@@ -33,6 +33,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRPCShowGameResult(const FString& InResultString);
 
+	UFUNCTION(Client, Reliable)
+	void ClientRPCEnableNumberPad();
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
 

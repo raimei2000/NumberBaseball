@@ -51,6 +51,11 @@ void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
     ServerRPCHandleCommit(InDigits);
 }
 
+void ANBPlayerController::ClientRPCEnableNumberPad_Implementation()
+{
+    MainHUDWidgetInstance->NumberPad->SetIsEnabled(true);
+}
+
 void ANBPlayerController::ClientRPCShowGameResult_Implementation(const FString& InResultString)
 {
     MainHUDWidgetInstance->NotificationText->SetText(FText::FromString(InResultString));

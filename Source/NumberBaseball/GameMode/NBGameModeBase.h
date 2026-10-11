@@ -31,6 +31,8 @@ public:
 
 	void JudgeGame(ANBPlayerController* CommitPlayerController, int32 InStrikeCount);
 
+	void ResetGame();
+
 private:
 	int32 NumberOfDigit = 3;
 
