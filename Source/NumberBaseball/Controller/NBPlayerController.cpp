@@ -11,6 +11,7 @@
 
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/TextBlock.h"
 
 ANBPlayerController::ANBPlayerController()
 {
@@ -50,6 +51,11 @@ void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)
     ServerRPCHandleCommit(InDigits);
 }
 
+void ANBPlayerController::ClientRPCShowGameResult_Implementation(const FString& InResultString)
+{
+    MainHUDWidgetInstance->NotificationText->SetText(FText::FromString(InResultString));
+}
+
 void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int32>& InDigits)
 {
     AGameModeBase* GM = UGameplayStatics::GetGameMode(this);
@@ -58,7 +64,7 @@ void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int3
         ANBGameModeBase* NBGM = Cast<ANBGameModeBase>(GM);
         if (IsValid(NBGM))
         {
-            TArray<int32> ResultArray = NBGM->JudgeResult(this, InDigits);
+            TArray<int32> ResultArray = NBGM->JudgeCommit(this, InDigits);
 
             for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
             {
@@ -68,6 +74,8 @@ void ANBPlayerController::ServerRPCHandleCommit_Implementation(const TArray<int3
                     NBPC->ClientRPCUpdateResultText(InDigits, ResultArray);
                 }
             }
+
+            NBGM->JudgeGame(this, ResultArray[1]);
         }
     }
 }

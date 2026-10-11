@@ -30,6 +30,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRPCUpdateResultText(const TArray<int32>& GuessArray, const TArray<int32>& ResultArray);
 
+	UFUNCTION(Client, Reliable)
+	void ClientRPCShowGameResult(const FString& InResultString);
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
 

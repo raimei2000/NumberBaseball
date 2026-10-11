@@ -5,6 +5,8 @@
 
 #include "Controller/NBPlayerController.h"
 #include "Player/NBPlayerState.h"
+#include "UI/UW_MainHUD.h"
+#include "NumberBaseball.h"
 
 void ANBGameModeBase::BeginPlay()
 {
@@ -45,6 +47,8 @@ void ANBGameModeBase::InitSecretNumber()
         SecretNumber.Add(Digits[Index]);
         Digits.RemoveAt(Index);
     }
+
+    NB_LOG_NET(LogNBNet, Error, TEXT("%d%d%d"), SecretNumber[0], SecretNumber[1], SecretNumber[2]);
 }
 
 void ANBGameModeBase::IncreaseGuessCount(ANBPlayerController* InPC)
@@ -56,7 +60,7 @@ void ANBGameModeBase::IncreaseGuessCount(ANBPlayerController* InPC)
     }
 }
 
-TArray<int32> ANBGameModeBase::JudgeResult(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber)
+TArray<int32> ANBGameModeBase::JudgeCommit(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber)
 {
     TArray<int32> Result = { 0, 0, 0 };
 
@@ -80,4 +84,41 @@ TArray<int32> ANBGameModeBase::JudgeResult(ANBPlayerController* CommitPlayerCont
     IncreaseGuessCount(CommitPlayerController);
 
     return Result;
+}
+
+void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int32 InStrikeCount)
+{
+    if (InStrikeCount == 3)
+    {
+        ANBPlayerState* NBPS = CommitPlayerController->GetPlayerState<ANBPlayerState>();
+        FString ResultString = NBPS->PlayerNameString + FString(TEXT(" Win!!"));
+
+        for (const auto& NBPC : AllPlayerControllers)
+        {
+            NBPC->ClientRPCShowGameResult(ResultString);
+        }
+    }
+    else
+    {
+        bool bIsDraw = true;
+        for (const auto& NBPC : AllPlayerControllers)
+        {
+            ANBPlayerState* NBPS = NBPC->GetPlayerState<ANBPlayerState>();
+            if (NBPS->CurrentGuessCount < NBPS->MaxGuessCount)
+            {
+                bIsDraw = false;
+                break;
+            }
+        }
+
+        if (bIsDraw)
+        {
+            FString ResultString = FString(TEXT("Draw.."));
+
+            for (const auto& NBPC : AllPlayerControllers)
+            {
+                NBPC->ClientRPCShowGameResult(ResultString);
+            }
+        }
+    }
 }

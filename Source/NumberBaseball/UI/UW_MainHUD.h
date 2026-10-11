@@ -44,4 +44,6 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> GuessCountText;
 
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> NotificationText;
 };

@@ -27,7 +27,9 @@ public:
 	void IncreaseGuessCount(ANBPlayerController* InPC);
 
 	// Return Array: [Ball, Strike, Out]
-	TArray<int32> JudgeResult(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber);
+	TArray<int32> JudgeCommit(ANBPlayerController* CommitPlayerController, const TArray<int32>& InGuessNumber);
+
+	void JudgeGame(ANBPlayerController* CommitPlayerController, int32 InStrikeCount);
 
 private:
 	int32 NumberOfDigit = 3;

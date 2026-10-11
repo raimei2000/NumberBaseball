@@ -20,6 +20,7 @@ void UUW_MainHUD::NativeConstruct()
 
     ChosenNumberText->SetText(FText::AsNumber(0));
     ResultText->SetText(FText::FromString(TEXT("")));
+    NotificationText->SetText(FText::FromString(TEXT("")));
 }
 
 void UUW_MainHUD::NativeDestruct()
