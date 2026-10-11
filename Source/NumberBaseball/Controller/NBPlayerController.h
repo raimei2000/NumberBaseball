@@ -21,6 +21,8 @@ public:
 
 	virtual void BeginPlay() override;
 
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+
 	UFUNCTION()
 	void HandleNumberCommit(const TArray<int32>& InDigits);
 
@@ -43,4 +45,7 @@ public:
 	TSubclassOf<UUW_MainHUD> MainHUDWidgetClass;
 
 	TObjectPtr<UUW_MainHUD> MainHUDWidgetInstance;
+
+	UPROPERTY(Replicated)
+	bool bOutOfChance = false;
 };

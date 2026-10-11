@@ -12,6 +12,7 @@
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/TextBlock.h"
+#include "Net/UnrealNetwork.h"
 
 ANBPlayerController::ANBPlayerController()
 {
@@ -38,6 +39,13 @@ void ANBPlayerController::BeginPlay()
         }
     }
 
+}
+
+void ANBPlayerController::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    DOREPLIFETIME(ThisClass, bOutOfChance);
 }
 
 void ANBPlayerController::HandleNumberCommit(const TArray<int32>& InDigits)

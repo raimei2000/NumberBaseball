@@ -11,7 +11,7 @@
 ANBPlayerState::ANBPlayerState()
     : PlayerNameString(TEXT("None"))
     , CurrentGuessCount(0)
-    , MaxGuessCount(10)
+    , MaxGuessCount(5)
 {
     bReplicates = true;
 }

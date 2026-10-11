@@ -59,6 +59,11 @@ void ANBGameModeBase::IncreaseGuessCount(ANBPlayerController* InPC)
     if (IsValid(NBPS))
     {
         NBPS->IncreaseGuessCount();
+
+        if (NBPS->CurrentGuessCount >= NBPS->MaxGuessCount)
+        {
+            InPC->bOutOfChance = true;
+        }
     }
 }
 
@@ -84,8 +89,6 @@ TArray<int32> ANBGameModeBase::JudgeCommit(ANBPlayerController* CommitPlayerCont
     }
 
     IncreaseGuessCount(CommitPlayerController);
-
-    MoveOnToNextTurn();
 
     return Result;
 }
@@ -128,6 +131,10 @@ void ANBGameModeBase::JudgeGame(ANBPlayerController* CommitPlayerController, int
 
             ResetGame();
         }
+        else // Next Turn
+        {
+            MoveOnToNextTurn();
+        }
     }
 }
 
@@ -135,9 +142,12 @@ void ANBGameModeBase::ResetGame()
 {
     InitSecretNumber();
 
+    IndexOfPlayer = 0;
+
     for (TActorIterator<ANBPlayerController> It(GetWorld()); It; ++It)
     {
         (*It)->ClientRPCEnableNumberPad();
+        (*It)->bOutOfChance = false;
 
         ANBPlayerState* NBPS = (*It)->GetPlayerState<ANBPlayerState>();
         if (IsValid(NBPS))
@@ -167,8 +177,11 @@ void ANBGameModeBase::ControlTurn()
 
 void ANBGameModeBase::MoveOnToNextTurn()
 {
-    IndexOfPlayer++;
-    IndexOfPlayer %= AllPlayerControllers.Num();
+    do
+    {
+        IndexOfPlayer++;
+        IndexOfPlayer %= AllPlayerControllers.Num();
+    } while (AllPlayerControllers[IndexOfPlayer]->bOutOfChance);
 
     ControlTurn();
 }
