@@ -6,6 +6,7 @@
 #include "Controller/NBPlayerController.h"
 #include "Player/NBPlayerState.h"
 #include "UI/UW_MainHUD.h"
+#include "GameState/NBGameStateBase.h"
 #include "NumberBaseball.h"
 
 #include "EngineUtils.h"
@@ -30,6 +31,12 @@ void ANBGameModeBase::OnPostLogin(AController* NewPlayer)
         if (IsValid(NBPS))
         {
             NBPS->PlayerNameString = TEXT("Player") + FString::FromInt(AllPlayerControllers.Num());
+        }
+
+        ANBGameStateBase* NBGS = GetGameState<ANBGameStateBase>();
+        if (IsValid(NBGS))
+        {
+            NBGS->NumberOfPlayers++;
         }
     }
 }

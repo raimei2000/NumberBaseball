@@ -8,6 +8,7 @@
 #include "UI/UW_NumberPad.h"
 #include "GameMode/NBGameModeBase.h"
 #include "Player/NBPlayerState.h"
+#include "GameState/NBGameStateBase.h"
 
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
@@ -37,6 +38,12 @@ void ANBPlayerController::BeginPlay()
             MainHUDWidgetInstance->AddToViewport();
             MainHUDWidgetInstance->NumberPad->OnNumberCommitted.AddDynamic(this, &ANBPlayerController::HandleNumberCommit);
         }
+    }
+
+    ANBGameStateBase* NBGS = Cast<ANBGameStateBase>(UGameplayStatics::GetGameState(this));
+    if (IsValid(NBGS) && NBGS->NumberOfPlayers >= 2)
+    {
+        MainHUDWidgetInstance->NumberPad->SetIsEnabled(false);
     }
 
 }
